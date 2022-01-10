@@ -75,10 +75,6 @@ for loo in y_all_sim.columns:
     Sigma_mod_hat = Sigma_hat[1:,1:]
     Sigma_mod_hat_inv = np.linalg.inv(Sigma_mod_hat)
 
-    print(loo)
-    print(np.matmul(Sigma_0_hat.T, Sigma_mod_hat_inv))
-    break
-
     obs_pred = mu_hat[2061:3012] - np.matmul(np.matmul(Sigma_0_hat.T, Sigma_mod_hat_inv), re_hat_all_np[2061:3012,1:].T).T
     obs_var = sigma_0_hat - np.matmul(np.matmul(Sigma_0_hat.T, Sigma_mod_hat_inv), Sigma_0_hat)
 
@@ -88,7 +84,7 @@ for loo in y_all_sim.columns:
     mses_model.append(mse_our_model)
     mses_single_gp.append(mse_single_gp) # trained AND fit on ALL data
 
-    print('MSE. model:', mse_our_model, '. single gp:', mse_single_gp)
+    #print('MSE. model:', mse_our_model, '. single gp:', mse_single_gp)
 
     output = pd.DataFrame([x,
                          y_means,

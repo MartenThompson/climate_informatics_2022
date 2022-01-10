@@ -1,27 +1,9 @@
 import gpflow
-from gpflow.utilities import print_summary
-from gpflow.ci_utils import ci_niter
 
-from importlib import reload
-
-import matplotlib.pyplot as plt
 import numpy as np
 import os
 import pandas as pd
 import re
-
-from scipy.stats import expon, uniform, bernoulli, norm, multivariate_normal
-from scipy.stats import gaussian_kde
-
-from sklearn import preprocessing
-
-from importlib import reload
-
-import time
-import tensorflow as tf
-import tensorflow_probability as tfp
-from tensorflow_probability import distributions as tfd
-from tensorflow_probability import bijectors as tfb
 
 import cmip6_eb_funcs as my
 
@@ -29,6 +11,18 @@ np.random.seed(2022)
 
 cmip6s = pd.read_csv('../data/all_cmip6_simplified.csv')
 xall_dsmc, yall_dsmc, ds_names = my.make_subset_simplified(cmip6s, 0, 1.1, 'nsa_ds', True)
+
+vars = []
+for i in range(len(xall_dsmc)):
+    a = 1 if ds_names[i] == 'observed' else 0.1
+    if ds_names[i] != 'observed':
+        vars.append(np.var(yall_dsmc[i][0:2061]))
+    else:
+        print('observed var:', np.var(yall_dsmc[i]))
+print('CMIP6 Avg Var 1850-2020:', np.mean(vars))
+
+
+
 
 ########################
 # EB Kernel Param Ests #

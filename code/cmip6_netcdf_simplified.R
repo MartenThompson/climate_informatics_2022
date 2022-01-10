@@ -14,7 +14,9 @@ library(ncdf4)
 inconsistent_list <- c('awi-cm-1-1-mr', 'cams-csm1-0', 'fgoals-g3')
 max_time <- 3012
 
+##########################
 #### CSV NetCDF Files ####
+##########################
 setwd('~/Git/climate_informatics_2022/data/')
 
 #my_start_dt <- as.POSIXct('1850-01-01 00:00:00')
@@ -57,8 +59,9 @@ plot(dat.plot$x[1:end], dat.plot$nsa_temp_raw[1:end])
 # and adj does not
 plot(dat.plot$x[1:end], dat.plot$nsa_ds[1:end])
 
-
+#######################
 #### CSV Observed #####
+#######################
 # Note: HadCRUT5 is already adjusted for seasonality.
 # Hence, we will make raw and adj temps equal for this.
 observed <- read.csv('HadCRUT5.0Analysis_gl_reshape.txt')
@@ -91,8 +94,9 @@ plot(observed_keep$x[1:24], observed_keep$nsa_ds[1:24], type='n')
 lines(observed_keep$x[1:24], observed_keep$nsa_ds[1:24])
 
 
-
+################
 #### Saving ####
+################
 all_data <- rbind(observed_keep, all_data)
 
 write.csv(all_data, "all_cmip6_simplified.csv", row.names = FALSE)
