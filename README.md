@@ -1,4 +1,4 @@
-# A Dependent Multi-model Climate Prediction with Gaussian Processes
+# A Dependent Multi-model Approach to Climate Prediction with Gaussian Processes
 
 Authors: Marten Thompson, Dr. Amy Braverman, Dr.Snigdhansu Chatterjee
 
