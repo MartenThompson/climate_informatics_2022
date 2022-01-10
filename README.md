@@ -5,7 +5,7 @@ Authors: Marten Thompson, Dr. Amy Braverman, Dr.Snigdhansu Chatterjee
 Manuscript, data, and code associated with submission to Climate Informatics 2022. 
 
 ## Code
-`cmip6_netcdf_simplified.R` creates the de-seasonalized time series. `analysis.py` estimates and examines our model to the observed data and CMIP6 simulations. `analysis_loo.py` performs the Leave-One-Out analysis described in the manuscript. These two scripts call methods defined in `cmip6_eb_funcs.py`. `gpre_vis.R` creates the figures.
+`cmip6_netcdf_simplified.R` creates the de-seasonalized time series. `analysis.py` estimates and examines our model to the observed data and CMIP6 simulations. `analysis_loo.py` performs the Leave-One-Out analysis described in the manuscript. These two scripts call methods defined in `cmip6_eb_funcs.py`. `gpre_vis.R` creates figures and calculates summary statistics. Running any of this code will overwrite existing contents.
 
 
 ## Data
