@@ -18,17 +18,18 @@ setwd('~/Git/climate_informatics_2022/code/')
 ##################
 #### Observed ####
 ##################
-observed <- read.csv('output/gpre_vis/preds_obs.csv')
+observed <- read.csv('output/gpre_vis/preds_obs_long.csv')
 x <- observed$x*(250) + 1850
 
 png('images/observed_pred_nomuhat.png', width=540, height=360)
 empty_plot(c(1850,2100), c(-1,6.5), '', paste('deviation ', expression('\u00B0C')))
-lines(x, observed$observed, col=rgb(0,0,0,1))
 
 stdev <- rep(sqrt(observed$obs_var_scalar[1]), length(x))
 polygon(c(x, rev(x)), c(observed$obs_pred-2*stdev, rev(observed$obs_pred+2*stdev)),
         col = rgb(0,1,0,0.5), border = NA)
 lines(x, observed$obs_pred, col=rgb(0,1,0,1), lwd=1)
+
+lines(x, observed$observed, col=rgb(0,0,0,1))
 
 legend(1856, 6.5, c('observed', 'predicted'), fill=c('black', 'green'), ncol=2,border=NA)
 dev.off()
@@ -66,9 +67,7 @@ plot_zoom <- function(filepath, fn, a=1, b=length(x)) {
   stdev <- rep(sqrt(dat$obs_var_scalar[1]), length(x))
   
   polygon(c(x, rev(x)), c(dat$obs_pred[a:b]-2*stdev, rev(dat$obs_pred[a:b]+2*stdev)),
-          col = rgb(0,1,0,0.25), border = NA)
-  polygon(c(x, rev(x)), c(dat$obs_pred[a:b]-1*stdev, rev(dat$obs_pred[a:b]+1*stdev)),
-          col = rgb(0,1,0,0.25), border = NA)
+          col = rgb(0,1,1,0.25), border = NA)
   lines(x, dat$obs_pred[a:b], col=rgb(0,1,0,1), lwd=2)
   
   legend(2021.1, 4, c(stringr::str_split(fn, "\\.")[[1]][1], 'predicted'), fill=c('black', 'green'), ncol=2, border=NA)
@@ -97,7 +96,7 @@ for (f in files) {
   dat = plot_zoom(dir, f, 2062,2120)  
   
   dev.off()
-  #break
+  break
 }
 
 
@@ -111,7 +110,7 @@ cond.effect <- cond.effect[keep]
 x <- (dat$x-0.0003320053)*(250) + 1850
 x <- x[keep]
 
-png(paste0('images/condeff_', 'access-cm2', '.png' ), height=360, width=360)
+png(paste0('images/condeff_', 'access-cm2', '.png' ), height=360, width=720)
 empty_plot(c(2020,2100), c(-1.5,1.5), '', paste('deviation ', expression('\u00B0C')))
 lines(x, cond.effect, col=rgb(0,1,0,1))
 lines(c(2020,2100), c(0,0), col=rgb(1,0,0,1), lwd=2)

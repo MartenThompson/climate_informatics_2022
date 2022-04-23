@@ -101,7 +101,8 @@ Sigma_0_hat = np.expand_dims(Sigma_hat[1:,0],1) # column vector
 Sigma_mod_hat = Sigma_hat[1:,1:]
 Sigma_mod_hat_inv = np.linalg.inv(Sigma_mod_hat)
 
-obs_pred = mu_hat[2061:3036] - np.matmul(np.matmul(Sigma_0_hat.T, Sigma_mod_hat_inv), re_hat_all_np[2061:3036,1:].T).T
+
+obs_pred = mu_hat - np.matmul(np.matmul(Sigma_0_hat.T, Sigma_mod_hat_inv), re_hat_all_np[:,1:].T).T
 obs_var = sigma_0_hat - np.matmul(np.matmul(Sigma_0_hat.T, Sigma_mod_hat_inv), Sigma_0_hat)
 
 observed_ts = y_all['observed'][~np.isnan(y_all['observed'])]
@@ -111,8 +112,10 @@ gpre_vis = pd.DataFrame([x,
                          np.squeeze(mu_hat),
                          np.squeeze(mu_var),
                          observed_ts,
-                         np.append(np.repeat(np.nan, observed_ts.shape[0]), obs_pred),
+                         np.squeeze(obs_pred),
                          np.repeat(np.squeeze(obs_var), observed_ts.shape[0])]).T
 gpre_vis.columns = ['x', 'y_mean', 'mu_hat', 'mu_hat_var', 'observed', 'obs_pred', 'obs_var_scalar']
 
-gpre_vis.to_csv('output/gpre_vis/preds_obs.csv', index=False)
+gpre_vis.to_csv('output/gpre_vis/preds_obs_long.csv', index=False)
+
+
