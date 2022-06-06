@@ -28,11 +28,27 @@ stdev <- rep(sqrt(observed$obs_var_scalar[1]), length(x))
 polygon(c(x, rev(x)), c(observed$obs_pred-2*stdev, rev(observed$obs_pred+2*stdev)),
         col = rgb(0,1,0,0.5), border = NA)
 lines(x, observed$obs_pred, col=rgb(0,1,0,1), lwd=1)
-
 lines(x, observed$observed, col=rgb(0,0,0,1))
-
 legend(1856, 6.5, c('observed', 'predicted'), fill=c('black', 'green'), ncol=2,border=NA)
 dev.off()
+
+
+# Matern kernel predictions for comparison (supplementary materials).
+observed_matern <- read.csv('output/gpre_vis/preds_obs_long_matern.csv')
+x <- observed_matern$x*(250) + 1850
+
+png('images/observed_matern_pred_nomuhat.png', width=540, height=360)
+empty_plot(c(1850,2100), c(-1,6.5), '', paste('deviation ', expression('\u00B0C')))
+
+stdev <- rep(sqrt(observed_matern$obs_var_scalar[1]), length(x))
+polygon(c(x, rev(x)), c(observed_matern$obs_pred-2*stdev, rev(observed_matern$obs_pred+2*stdev)),
+        col = rgb(0,0,1,0.5), border = NA)
+lines(x, observed_matern$obs_pred, col=rgb(0,0,1,1), lwd=1)
+lines(x, observed$observed, col=rgb(0,0,0,1))
+legend(1856, 6.5, c('observed', 'predicted (Matern)'), fill=c('black', 'blue'), ncol=2,border=NA)
+dev.off()
+
+
 
 
 #############
@@ -98,6 +114,7 @@ for (f in files) {
   dev.off()
   break
 }
+
 
 
 ############################
